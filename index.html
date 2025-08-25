@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shader Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- SVG Filters -->
+    <svg class="filters">
+        <defs>
+            <filter id="glass-effect" x="-50%" y="-50%" width="200%" height="200%">
+                <feTurbulence baseFrequency="0.005" numOctaves="1" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.3" />
+                <feColorMatrix
+                    type="matrix"
+                    values="1 0 0 0 0.02
+                            0 1 0 0 0.02
+                            0 0 1 0 0.05
+                            0 0 0 0.9 0"
+                    result="tint"
+                />
+            </filter>
+            <filter id="gooey-filter" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                <feColorMatrix
+                    in="blur"
+                    mode="matrix"
+                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                    result="gooey"
+                />
+                <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Animated Background -->
+        <div class="shader-background">
+            <div class="mesh-gradient primary"></div>
+            <div class="mesh-gradient secondary"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <!-- Logo -->
+            <div class="logo">
+                <svg fill="currentColor" viewBox="0 0 147 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="logo-svg">
+                    <path d="M56 50.2031V14H70V60.1562C70 65.5928 65.5928 70 60.1562 70C57.5605 70 54.9982 68.9992 53.1562 67.1573L0 14H19.7969L56 50.2031Z"></path>
+                    <path d="M147 56H133V23.9531L100.953 56H133V70H96.6875C85.8144 70 77 61.1856 77 50.3125V14H91V46.1562L123.156 14H91V0H127.312C138.186 0 147 8.81439 147 19.6875V56Z"></path>
+                </svg>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="nav">
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#solutions" class="nav-link">Solutions</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#docs" class="nav-link">Docs</a>
+            </nav>
+
+            <!-- Login Button Group -->
+            <div class="login-group" id="gooey-btn">
+                <button class="arrow-btn">
+                    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17" />
+                    </svg>
+                </button>
+                <button class="login-btn" onclick="openSignupModal()">Login</button>
+            </div>
+        </header>
+
+        <!-- Hero Content -->
+        <main class="hero-content">
+            <div class="hero-text">
+                <div class="badge" style="filter: url(#glass-effect);">
+                    <div class="badge-highlight"></div>
+                    <span class="badge-text">✨ New Paper Shaders Experience</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="title-beautiful">Beautiful</span> Shader<br>
+                    <span class="title-experiences">Experiences</span>
+                </h1>
+
+                <p class="hero-description">
+                    Create stunning visual experiences with our advanced shader technology. Interactive lighting, smooth
+                    animations, and beautiful effects that respond to your every move.
+                </p>
+
+                <div class="hero-buttons">
+                    <button class="btn-secondary">Pricing</button>
+                    <button class="btn-primary" onclick="openSignupModal()">Get Started</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Pulsing Circle -->
+        <div class="pulsing-circle">
+            <div class="circle-container">
+                <div class="pulsing-border"></div>
+                <div class="rotating-text">
+                    <svg class="text-svg" viewBox="0 0 100 100">
+                        <defs>
+                            <path id="circle" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+                        </defs>
+                        <text class="circular-text">
+                            <textPath href="#circle" startOffset="0%">
+                                v0 is amazing • v0 is amazing • v0 is amazing • v0 is amazing •
+                            </textPath>
+                        </text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign-up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Your Account</h2>
+                <button class="close-btn" onclick="closeSignupModal()">&times;</button>
+            </div>
+            <form id="signupForm" class="signup-form">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+            <div class="modal-footer">
+                <p>Already have an account? <a href="#" onclick="switchToLogin()">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
